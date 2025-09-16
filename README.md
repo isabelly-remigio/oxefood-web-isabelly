@@ -68,3 +68,20 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+<!-- verificar o user -->
+
+ git config --global user.name
+ git config --global user.email
+
+ <!-- remover  -->
+
+git config --global --unset user.name
+git config --global --unset user.email
+
+<!-- trocar -->
+
+git config --global user.name "Novo Nome"
+git config --global user.email "novo@email.com"

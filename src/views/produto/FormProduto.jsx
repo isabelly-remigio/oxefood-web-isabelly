@@ -1,7 +1,7 @@
 import InputMask from 'comigo-tech-react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
-export default function FormCliente() {
+export default function FormProduto() {
 
     return (
 
@@ -61,7 +61,7 @@ export default function FormCliente() {
                                     label='Valor Unitário'
                                     placeholder='Informe o valor unitário do produto'
 
-                                    >
+                                >
                                 </Form.Input>
                                 <Form.Input
                                     required
@@ -69,6 +69,11 @@ export default function FormCliente() {
                                     width={6}
                                     label='Tempo de Entrega Minimo em Minutos'
                                     placeholder='30'>
+                                    <InputMask
+                                        mask="999"
+                                        maskChar={null}
+                                        placeholder="Ex: 30"
+                                    />
 
                                 </Form.Input>
 
@@ -78,6 +83,11 @@ export default function FormCliente() {
                                     width={6}
                                     label='Tempo de Entrega Maximo em Minutos'
                                     placeholder='40'>
+                                          <InputMask
+                                        mask="999"
+                                        maskChar={null}
+                                        placeholder="Ex: 40"
+                                    />
                                 </Form.Input>
 
                             </Form.Group>
