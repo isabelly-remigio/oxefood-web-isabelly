@@ -11,7 +11,7 @@ export default function FormCliente() {
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{ color: 'darkgray' }}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Produto </h2>
+                    <h2> <span style={{ color: 'darkgray' }}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
                     <Divider />
 
@@ -42,13 +42,13 @@ export default function FormCliente() {
 
                             <Form.Group>
 
-                                <Form.Input
+                                <Form.TextArea
                                     fluid
                                     label='Descrição'
                                     width={16}
                                     maxLength="100"
                                     placeholder='Informe a descrição do produto'>
-                                </Form.Input>
+                                </Form.TextArea>
 
                             </Form.Group>
 
