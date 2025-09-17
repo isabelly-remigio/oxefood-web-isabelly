@@ -83,5 +83,6 @@ git config --global --unset user.email
 
 <!-- trocar -->
 
-git config --global user.name "Novo Nome"
-git config --global user.email "novo@email.com"
+git config --global user.name "isabelly-remigio"
+git config --global user.email "isabelly.remigio@gmail.com"
+

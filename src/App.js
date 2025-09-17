@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="App">
 
-      {/* <FormCliente /> */}
+      <FormCliente />
       {/* <FormProduto /> */}
-      <FormEntregador />
+      {/* <FormEntregador /> */}
 
   
 

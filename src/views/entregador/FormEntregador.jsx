@@ -2,6 +2,11 @@ import InputMask from 'comigo-tech-react-input-mask';
 import { useState } from 'react';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
+
+
+export default function FormEntregador() {
+  const [ativo, setAtivo] = useState('sim'); 
+  
 const options = [
     { key: 'AC', text: 'Acre', value: 'AC' },
     { key: 'AL', text: 'Alagoas', value: 'AL' },
@@ -31,10 +36,6 @@ const options = [
     { key: 'SE', text: 'Sergipe', value: 'SE' },
     { key: 'TO', text: 'Tocantins', value: 'TO' }
 ]
-
-
-export default function FormEntregador() {
-  const [ativo, setAtivo] = useState('sim'); // estado para o radio
     return (
 
         <div>
