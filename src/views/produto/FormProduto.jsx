@@ -1,8 +1,10 @@
 import InputMask from 'comigo-tech-react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-import MenuSistema from '../MenuSistema/MenuSistema';
+import MenuSistema from '../../views/MenuSistema/MenuSistema';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 export default function FormProduto() {
 
@@ -12,7 +14,7 @@ export default function FormProduto() {
     const [valorUnitario, setValorUnitario] = useState();
     const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
     const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
-    
+
     function salvar() {
         let produtoRequest = {
             codigo: codigo,
@@ -23,7 +25,7 @@ export default function FormProduto() {
             tempoEntregaMaximo: tempoEntregaMaximo
         }
 
-            axios.post("http://localhost:8080/api/produto", produtoRequest)
+        axios.post("http://localhost:8080/api/produto", produtoRequest)
             .then((response) => {
                 console.log('Produto cadastrado com sucesso.')
             })
@@ -31,7 +33,7 @@ export default function FormProduto() {
                 console.log('Erro ao incluir o um produto.')
             })
     }
-    
+
     return (
 
         <div>
@@ -66,26 +68,27 @@ export default function FormProduto() {
                                     fluid
                                     width={5}
                                     label='Codigo do Produto'
-                                    placeholder='Informe o codigo do produto'>
+                                    placeholder='Informe o codigo do produto'
                                     value={codigo}
-                                    onChange={e => setCodigo(e.target.value)}    
+                                    onChange={e => setCodigo(e.target.value)}
+                                >
+
                                 </Form.Input>
 
                             </Form.Group>
 
                             <Form.Group>
-
                                 <Form.TextArea
                                     fluid
                                     label='Descrição'
                                     width={16}
                                     maxLength="100"
-                                    placeholder='Informe a descrição do produto'>
+                                    placeholder='Informe a descrição do produto'
                                     value={descricao}
                                     onChange={e => setDescricao(e.target.value)}
-                                </Form.TextArea>
-
+                                />
                             </Form.Group>
+
 
                             <Form.Group>
 
@@ -96,15 +99,15 @@ export default function FormProduto() {
                                     label='Valor Unitário'
                                     placeholder='Informe o valor unitário do produto'
                                     value={valorUnitario}
-                                    onChange={e => setValorUnitario(e.target.value)}    
-                            
+                                    onChange={e => setValorUnitario(e.target.value)}
+
                                 >
                                 </Form.Input>
                                 <Form.Input
                                     required
                                     fluid
                                     width={6}
-                                    label='Tempo de Entrega Minimo em Minutos'
+                                    label='Entrega Minimo'
                                     placeholder='30'>
                                     <InputMask
                                         mask="999"
@@ -120,9 +123,9 @@ export default function FormProduto() {
                                     required
                                     fluid
                                     width={6}
-                                    label='Tempo de Entrega Maximo em Minutos'
+                                    label='Entrega Maximo '
                                     placeholder='40'>
-                                          <InputMask
+                                    <InputMask
                                         mask="999"
                                         maskChar={null}
                                         placeholder="Ex: 40"
@@ -135,19 +138,20 @@ export default function FormProduto() {
                         </Form>
 
                         <div style={{ marginTop: '4%' }}>
+                            <Link to={'/list-produto'}>
 
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                <Icon name='reply' />
-                                Voltar
-                            </Button>
-
+                                <Button
+                                    type="button"
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition='left'
+                                    color='orange'
+                                >
+                                    <Icon name='reply' />
+                                    Voltar
+                                </Button>
+                            </Link>
                             <Button
                                 inverted
                                 circular

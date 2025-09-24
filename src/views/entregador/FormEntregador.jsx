@@ -4,24 +4,25 @@ import { useState } from 'react';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 import MenuSistema from '../../views/MenuSistema/MenuSistema';
+import { Link } from 'react-router-dom';
 
 export default function FormEntregador() {
     const [ativo, setAtivo] = useState('sim');
-    const [uf, setUf] = useState();
-    const [cidade, setCidade] = useState();
-    const [bairro, setBairro] = useState();
-    const [cep, setCep] = useState();
-    const [numero, setNumero] = useState();
-    const [rua, setRua] = useState();
+    const [enderecoUf, setEnderecoUf] = useState();
+    const [enderecoCidade, setEnderecoCidade] = useState();
+    const [enderecoBairro, setEnderecoBairro] = useState();
+    const [enderecoCep, setEnderecoCep] = useState();
+    const [enderecoNumero, setEnderecoNumero] = useState();
+    const [enderecoRua, setEnderecoRua] = useState();
     const [valorFrete, setValorFrete] = useState();
-    const [qtdEntregas, setQtdEntregas] = useState();
+    const [qtdEntregasRealizadas, setQtdEntregasRealizadas] = useState();
     const [foneFixo, setFoneFixo] = useState();
     const [foneCelular, setFoneCelular] = useState();
     const [dataNascimento, setDataNascimento] = useState();
     const [rg, setRg] = useState();
     const [cpf, setCpf] = useState();
     const [nome, setNome] = useState();
-    const [complemento, setComplemento] = useState();
+    const [enderecoComplemento, setEnderecoComplemento] = useState();
 
 
     function salvar() {
@@ -33,15 +34,15 @@ export default function FormEntregador() {
             dataNascimento: dataNascimento,
             foneCelular: foneCelular,
             foneFixo: foneFixo,
-            qtdEntregasRealizadas: qtdEntregas,   // corrigido
+            qtdEntregasRealizadas: qtdEntregasRealizadas,
             valorFrete: valorFrete,
-            enderecoRua: rua,                      // corrigido
-            enderecoComplemento: complemento,     // corrigido
-            enderecoNumero: numero,                // corrigido
-            enderecoBairro: bairro,                // corrigido
-            enderecoCidade: cidade,                // corrigido
-            enderecoCep: cep,                      // corrigido
-            enderecoUf: uf,                        // corrigido
+            enderecoenderecoRua: enderecoRua,
+            enderecoComplemento: enderecoComplemento,
+            enderecoNumero: enderecoNumero,
+            enderecoBairro: enderecoBairro,
+            enderecoCidade: enderecoCidade,
+            enderecoCep: enderecoCep,
+            enderecoUf: enderecoUf,
             ativo: ativo
         }
 
@@ -184,8 +185,8 @@ export default function FormEntregador() {
                                     fluid
                                     label='QTD Entregas Realizadas'
                                     width={5}
-                                    value={qtdEntregas}
-                                    onChange={e => setQtdEntregas(e.target.value)}
+                                    value={qtdEntregasRealizadas}
+                                    onChange={e => setQtdEntregasRealizadas(e.target.value)}
                                 />
                                 <Form.Input
                                     fluid
@@ -201,18 +202,18 @@ export default function FormEntregador() {
                                 <Form.Input
                                     fluid
                                     width={16}
-                                    label='Rua'
-                                    maxLength="10"
-                                    value={rua}
-                                    onChange={e => setRua(e.target.value)}
-                                    placeholder='Informe o nome da rua'
+                                    label='enderecoRua'
+                                    maxLength="100"
+                                    value={enderecoRua}
+                                    onChange={e => setEnderecoRua(e.target.value)}
+                                    placeholder='Informe o nome da enderecoRua'
                                 />
                                 <Form.Input
                                     width={4}
                                     fluid
                                     label='Numero'
-                                    value={numero}
-                                    onChange={e => setNumero(e.target.value)}
+                                    value={enderecoNumero}
+                                    onChange={e => setEnderecoNumero(e.target.value)}
                                 />
                             </Form.Group>
                             <Form.Group>
@@ -220,15 +221,15 @@ export default function FormEntregador() {
                                     width={9}
                                     fluid
                                     label='Bairro'
-                                    value={bairro}
-                                    onChange={e => setBairro(e.target.value)}
+                                    value={enderecoBairro}
+                                    onChange={e => setEnderecoBairro(e.target.value)}
                                 />
                                 <Form.Input
                                     width={9}
                                     fluid
                                     label='Cidade'
-                                    value={cidade}
-                                    onChange={e => setCidade(e.target.value)}
+                                    value={enderecoCidade}
+                                    onChange={e => setEnderecoCidade(e.target.value)}
                                 />
                                 <Form.Input
                                     width={3}
@@ -237,8 +238,8 @@ export default function FormEntregador() {
                                 >
                                     <InputMask
                                         mask="99999-999"
-                                        value={cep}
-                                        onChange={e => setCep(e.target.value)}
+                                        value={enderecoCep}
+                                        onChange={e => setEnderecoCep(e.target.value)}
                                     />
                                 </Form.Input>
                             </Form.Group>
@@ -249,8 +250,8 @@ export default function FormEntregador() {
                                     label='UF'
                                     options={options}
                                     placeholder='Selecione'
-                                    value={uf}
-                                    onChange={(e, { value }) => setUf(value)}
+                                    value={enderecoUf}
+                                    onChange={(e, { value }) => setEnderecoUf(value)}
 
                                 />
 
@@ -260,8 +261,8 @@ export default function FormEntregador() {
                                 <Form.Input
                                     fluid
                                     label='Complemento'
-                                    value={complemento}
-                                    onChange={e => setComplemento(e.target.value)}
+                                    value={enderecoComplemento}
+                                    onChange={e => setEnderecoComplemento(e.target.value)}
                                     placeholder='Informe o complemento do endereço'
                                 />
                             </Form.Group>
@@ -284,19 +285,19 @@ export default function FormEntregador() {
                         </Form>
 
                         <div style={{ marginTop: '4%' }}>
-
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                <Icon name='reply' />
-                                Voltar
-                            </Button>
-
+                            <Link to={'/list-entregador'}>
+                                <Button
+                                    type="button"
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition='left'
+                                    color='orange'
+                                >
+                                    <Icon name='reply' />
+                                    Voltar
+                                </Button>
+                            </Link>
                             <Button
                                 inverted
                                 circular
