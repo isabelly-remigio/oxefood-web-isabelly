@@ -4,108 +4,108 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import MenuSistema from '../../views/MenuSistema/MenuSistema';
 
-export default function ListProduto () {
+export default function ListProduto() {
 
-   const [lista, setLista] = useState([]);
+    const [lista, setLista] = useState([]);
 
-   useEffect(() => {
-       carregarLista();
-   }, [])
+    useEffect(() => {
+        carregarLista();
+    }, [])
 
-   function carregarLista() {
+    function carregarLista() {
 
-       axios.get("http://localhost:8080/api/produto")
-       .then((response) => {
-           setLista(response.data)
-       })
-   }
-//    function formatarData(dataParam) {
+        axios.get("http://localhost:8080/api/produto")
+            .then((response) => {
+                setLista(response.data)
+            })
+    }
+    //    function formatarData(dataParam) {
 
-//        if (dataParam === null || dataParam === '' || dataParam === undefined) {
-//            return ''
-//        }
+    //        if (dataParam === null || dataParam === '' || dataParam === undefined) {
+    //            return ''
+    //        }
 
-//        let arrayData = dataParam.split('-');
-//        return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
-//     }
-    
-    return(
-       <div>
-           <MenuSistema tela={'produto'} />
-           <div style={{marginTop: '3%'}}>
+    //        let arrayData = dataParam.split('-');
+    //        return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
+    //     }
 
-               <Container textAlign='justified' >
+    return (
+        <div>
+            <MenuSistema tela={'produto'} />
+            <div style={{ marginTop: '3%' }}>
 
-                   <h2> Produto </h2>
-                   <Divider />
+                <Container textAlign='justified' >
 
-                   <div style={{marginTop: '4%'}}>
-                       <Button
-                           label='Novo'
-                           circular
-                           color='orange'
-                           icon='clipboard outline'
-                           floated='right'
-                           as={Link}
-                           to='/form-produto'
-                       />
+                    <h2> Produto </h2>
+                    <Divider />
 
-    <br/><br/><br/>
-                  
-                       <Table color='orange' sortable celled>
+                    <div style={{ marginTop: '4%' }}>
+                        <Button
+                            label='Novo'
+                            circular
+                            color='orange'
+                            icon='clipboard outline'
+                            floated='right'
+                            as={Link}
+                            to='/form-produto'
+                        />
 
-                           <Table.Header>
-                               <Table.Row>
-                                   <Table.HeaderCell>Titulo</Table.HeaderCell>
-                                   <Table.HeaderCell>Codigo</Table.HeaderCell>
-                                   <Table.HeaderCell>Descrição</Table.HeaderCell>
-                                   <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
-                                   <Table.HeaderCell>Entrega Mín</Table.HeaderCell>
+                        <br /><br /><br />
+
+                        <Table color='orange' sortable celled>
+
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Titulo</Table.HeaderCell>
+                                    <Table.HeaderCell>Codigo</Table.HeaderCell>
+                                    <Table.HeaderCell>Descrição</Table.HeaderCell>
+                                    <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
+                                    <Table.HeaderCell>Entrega Mín</Table.HeaderCell>
                                     <Table.HeaderCell>Entrega Máx</Table.HeaderCell>
-                                   <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
-                               </Table.Row>
-                           </Table.Header>
-                      
-                           <Table.Body>
+                                    <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
 
-                               { lista.map(produto => (
+                            <Table.Body>
 
-                                   <Table.Row key={produto.id}>
-                                       <Table.Cell>{produto.titulo}</Table.Cell>
+                                {lista.map(produto => (
+
+                                    <Table.Row key={produto.id}>
+                                        <Table.Cell>{produto.titulo}</Table.Cell>
                                         <Table.Cell>{produto.codigo}</Table.Cell>
                                         <Table.Cell>{produto.descricao}</Table.Cell>
                                         <Table.Cell>{produto.valorUnitario}</Table.Cell>
                                         <Table.Cell>{produto.tempoEntregaMinimo}</Table.Cell>
                                         <Table.Cell>{produto.tempoEntregaMaximo}</Table.Cell>
-                                       <Table.Cell textAlign='center'>
+                                        <Table.Cell textAlign='center'>
 
-                                           <Button
-                                               inverted
-                                               circular
-                                               color='green'
-                                               title='Clique aqui para editar os dados deste produto'
-                                               icon>
-                                                    <Icon name='edit' />
-                                           </Button> &nbsp;
- <Button
-                                               inverted
-                                               circular
-                                               color='red'
-                                               title='Clique aqui para remover este produto'
-                                               icon>
-                                                   <Icon name='trash' />
-                                           </Button>
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='green'
+                                                title='Clique aqui para editar os dados deste produto'
+                                                icon>
+                                                <Link to="/form-produto" state={{ id: produto.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
+                                            </Button> &nbsp;
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='red'
+                                                title='Clique aqui para remover este produto'
+                                                icon>
+                                                <Icon name='trash' />
+                                            </Button>
 
-                                       </Table.Cell>
-                                   </Table.Row>
-                               ))}
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))}
 
-                           </Table.Body>
-                       </Table>
-                   </div>
-               </Container>
-           </div>
+                            </Table.Body>
+                        </Table>
+                    </div>
+                </Container>
+            </div>
 
-       </div>
-   )
+        </div>
+    )
 }

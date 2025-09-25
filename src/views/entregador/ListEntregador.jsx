@@ -51,7 +51,6 @@ export default function Listentregador() {
                         />
 
                         <br /><br /><br />
-
                         <Table
                             color='orange'
                             sortable
@@ -59,24 +58,18 @@ export default function Listentregador() {
                             responsive
                             style={{ fontSize: '13px', lineHeight: '1.2' }}
                         >
-
-
-
-
                             <Table.Header>
                                 <Table.Row>
                                     <Table.HeaderCell>Nome</Table.HeaderCell>
                                     <Table.HeaderCell>CPF</Table.HeaderCell>
                                     <Table.HeaderCell>RG</Table.HeaderCell>
-                                    <Table.HeaderCell>Dta de Nascimento</Table.HeaderCell>
+                                    <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
                                     <Table.HeaderCell>Fone Celular</Table.HeaderCell>
                                     <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
                                     <Table.HeaderCell>Entregas</Table.HeaderCell>
                                     <Table.HeaderCell>Frete</Table.HeaderCell>
-                                    <Table.HeaderCell>Rua</Table.HeaderCell>
+                                    <Table.HeaderCell>Endereço</Table.HeaderCell> {/* Coluna juntada */}
                                     <Table.HeaderCell>Número</Table.HeaderCell>
-                                    <Table.HeaderCell>Bairro</Table.HeaderCell>
-                                    <Table.HeaderCell>Cidade</Table.HeaderCell>
                                     <Table.HeaderCell>CEP</Table.HeaderCell>
                                     <Table.HeaderCell>UF</Table.HeaderCell>
                                     <Table.HeaderCell>Complemento</Table.HeaderCell>
@@ -86,9 +79,7 @@ export default function Listentregador() {
                             </Table.Header>
 
                             <Table.Body>
-
                                 {lista.map(entregador => (
-
                                     <Table.Row key={entregador.id}>
                                         <Table.Cell>{entregador.nome}</Table.Cell>
                                         <Table.Cell>{entregador.cpf}</Table.Cell>
@@ -98,14 +89,22 @@ export default function Listentregador() {
                                         <Table.Cell>{entregador.foneFixo}</Table.Cell>
                                         <Table.Cell>{entregador.qtdEntregasRealizadas}</Table.Cell>
                                         <Table.Cell>{entregador.valorFrete}</Table.Cell>
-                                        <Table.Cell>{entregador.enderecoRua}</Table.Cell>
+                                        <Table.Cell>
+                                            {`${entregador.enderecoRua}, - ${entregador.enderecoCidade} - ${entregador.enderecoBairro}`}
+                                        </Table.Cell>
                                         <Table.Cell>{entregador.enderecoNumero}</Table.Cell>
-                                        <Table.Cell>{entregador.enderecoBairro}</Table.Cell>
-                                        <Table.Cell>{entregador.enderecoCidade}</Table.Cell>
                                         <Table.Cell>{entregador.enderecoCep}</Table.Cell>
                                         <Table.Cell>{entregador.enderecoUf}</Table.Cell>
                                         <Table.Cell>{entregador.enderecoComplemento}</Table.Cell>
-                                        <Table.Cell>{entregador.ativo}</Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            {entregador.ativo ? (
+                                                <Icon name='check circle' color='green' />
+                                            ) : (
+                                                <Icon name='times circle' color='red' />
+                                            )}
+                                        </Table.Cell>
+
+
                                         <Table.Cell textAlign='center'>
 
                                             <Button
@@ -114,7 +113,7 @@ export default function Listentregador() {
                                                 color='green'
                                                 title='Clique aqui para editar os dados deste entregador'
                                                 icon>
-                                                <Icon name='edit' />
+                                                <Link to="/form-entregador" state={{ id: entregador.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
                                             </Button> &nbsp;
                                             <Button
                                                 inverted

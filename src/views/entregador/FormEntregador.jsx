@@ -1,13 +1,27 @@
 import axios from 'axios';
 import InputMask from 'comigo-tech-react-input-mask';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
-import MenuSistema from '../../views/MenuSistema/MenuSistema';
 import { Link } from 'react-router-dom';
+import MenuSistema from '../../views/MenuSistema/MenuSistema';
+
+
+function formatarData(dataParam) {
+
+    if (dataParam === null || dataParam === '' || dataParam === undefined) {
+        return ''
+    }
+
+    let arrayData = dataParam.split('-');
+    return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
+}
+
+
 
 export default function FormEntregador() {
-    const [ativo, setAtivo] = useState('sim');
+    const [ativo, setAtivo] = useState(null); 
     const [enderecoUf, setEnderecoUf] = useState();
     const [enderecoCidade, setEnderecoCidade] = useState();
     const [enderecoBairro, setEnderecoBairro] = useState();
@@ -23,6 +37,34 @@ export default function FormEntregador() {
     const [cpf, setCpf] = useState();
     const [nome, setNome] = useState();
     const [enderecoComplemento, setEnderecoComplemento] = useState();
+    const { state } = useLocation();
+    const [idEntregador, setIdEntregador] = useState();
+
+    useEffect(() => {
+        if (state != null && state.id != null) {
+            axios.get("http://localhost:8080/api/entregador/" + state.id)
+                .then((response) => {
+                    setIdEntregador(response.data.id)
+                    setNome(response.data.nome)
+                    setCpf(response.data.cpf)
+                    setRg(response.data.rg)
+                    setDataNascimento(formatarData(response.data.dataNascimento))
+                    setFoneCelular(response.data.foneCelular)
+                    setFoneFixo(response.data.foneFixo)
+                    setQtdEntregasRealizadas(response.data.qtdEntregasRealizadas)
+                    setValorFrete(response.data.valorFrete)
+                    setEnderecoRua(response.data.enderecoRua)
+                    setEnderecoComplemento(response.data.enderecoComplemento)
+                    setEnderecoNumero(response.data.enderecoNumero)
+                    setEnderecoBairro(response.data.enderecoBairro)
+                    setEnderecoCidade(response.data.enderecoCidade)
+                    setEnderecoCep(response.data.enderecoCep)
+                    setEnderecoUf(response.data.enderecoUf)
+                    setAtivo(response.data.ativo)
+                })
+        }
+
+    }, [state])
 
 
     function salvar() {
@@ -36,7 +78,7 @@ export default function FormEntregador() {
             foneFixo: foneFixo,
             qtdEntregasRealizadas: qtdEntregasRealizadas,
             valorFrete: valorFrete,
-            enderecoenderecoRua: enderecoRua,
+            enderecoRua: enderecoRua,
             enderecoComplemento: enderecoComplemento,
             enderecoNumero: enderecoNumero,
             enderecoBairro: enderecoBairro,
@@ -49,16 +91,17 @@ export default function FormEntregador() {
 
 
 
-        axios.post("http://localhost:8080/api/entregador", entregadorRequest)
-            .then((response) => {
-                console.log('Entregador cadastrado com sucesso.')
-            })
-            .catch((error) => {
-                console.log('Erro ao incluir o um entregador.')
-            })
+        if (idEntregador != null) { //Alteração:
+            axios.put("http://localhost:8080/api/entregador/" + idEntregador, entregadorRequest)
+                .then((response) => { console.log('entregador alterado com sucesso.') })
+                .catch((error) => { console.log('Erro ao alter um entregador.') })
+        } else { //Cadastro:
+            axios.post("http://localhost:8080/api/entregador", entregadorRequest)
+                .then((response) => { console.log('entregador cadastrado com sucesso.') })
+                .catch((error) => { console.log('Erro ao incluir o entregador.') })
+        }
 
     }
-
     const options = [
         { key: 'AC', text: 'Acre', value: 'AC' },
         { key: 'AL', text: 'Alagoas', value: 'AL' },
@@ -97,7 +140,13 @@ export default function FormEntregador() {
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                    {idEntregador === undefined &&
+                        <h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+                    }
+                    {idEntregador !== undefined &&
+                        <h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+                    }
+
 
                     <Divider />
 
@@ -270,17 +319,18 @@ export default function FormEntregador() {
                                 <label>Ativo</label>
                                 <Form.Radio
                                     label='Sim'
-                                    value='sim'
-                                    checked={ativo === 'sim'}
-                                    onChange={() => setAtivo('sim')}
+                                    value={true}
+                                    checked={ativo === true}
+                                    onChange={() => setAtivo(true)}
                                 />
                                 <Form.Radio
                                     label='Não'
-                                    value='não'
-                                    checked={ativo === 'não'}
-                                    onChange={() => setAtivo('não')}
+                                    value={false}
+                                    checked={ativo === false}
+                                    onChange={() => setAtivo(false)}
                                 />
                             </Form.Group>
+
 
                         </Form>
 
