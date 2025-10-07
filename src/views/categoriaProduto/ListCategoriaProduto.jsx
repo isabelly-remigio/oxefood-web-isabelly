@@ -76,9 +76,9 @@ export default function ListProduto() {
                             </TableHeader>
 
                             <Table.Body>
-                                {lista.map(categoria => (
-                                    <Table.Row key={categoria.id}>
-                                        <Table.Cell>{categoria.id}</Table.Cell>
+                                {lista.map(categoria_produto => (
+                                    <Table.Row key={categoria_produto.id}>
+                                        <Table.Cell>{categoria_produto.descricao}</Table.Cell>
                                         <Table.Cell textAlign='center'>
                                             <Button
                                                 inverted
@@ -89,7 +89,7 @@ export default function ListProduto() {
                                             >
                                                 <Link
                                                     to='/form-categoriaProduto'
-                                                    state={{ id: categoria.id }}
+                                                    state={{ id: categoria_produto.id }}
                                                     style={{ color: 'green' }}
                                                 >
                                                     <Icon name='edit' />
@@ -102,7 +102,7 @@ export default function ListProduto() {
                                                 color='red'
                                                 title='Clique aqui para remover este produto'
                                                 icon
-                                                onClick={() => confirmaRemover(categoria.id)}
+                                                onClick={() => confirmaRemover(categoria_produto.id)}
                                             >
                                                 <Icon name='trash' />
                                             </Button>

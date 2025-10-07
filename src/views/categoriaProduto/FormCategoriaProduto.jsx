@@ -12,13 +12,13 @@ export default function FormCategoriaProduto () {
    
     const [descricao, setDescricao] = useState();
     const { state } = useLocation();
-    const [idCategoriaProduto, setIdCategoriaProduto] = useState();
+    const [idCategoria_Produto, setidCategoria_Produto] = useState();
 
   useEffect(() => {
         if (state != null && state.id != null) {
             axios.get("http://localhost:8080/api/categoria-produto/" + state.id)
                 .then((response) => {
-                    setIdCategoriaProduto(response.data.id)
+                    setidCategoria_Produto(response.data.id)
                     setDescricao(response.data.descricao)
                    
                 })
@@ -32,8 +32,8 @@ export default function FormCategoriaProduto () {
 
         }
 
-        if (idCategoriaProduto != null){
-            axios.put("http://localhost:8080/api/categoria-produto/" + idCategoriaProduto, categoriaProdutoRequest)
+        if (idCategoria_Produto != null){
+            axios.put("http://localhost:8080/api/categoria-produto/" + idCategoria_Produto, categoriaProdutoRequest)
              .then((response) => { console.log('Produto alterado com sucesso.') })
                 .catch((error) => { console.log('Erro ao alter um Produto.') })
  } else { //Cadastro:
@@ -54,10 +54,10 @@ export default function FormCategoriaProduto () {
             <div style={{ marginTop: '3%' }}>
 
                 <Container textAlign='justified' >
-                    {idCategoriaProduto === undefined &&
+                    {idCategoria_Produto === undefined &&
                         <h2> <span style={{ color: 'darkgray' }}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Categoria Produto</h2>
                     }
-                    {idCategoriaProduto != undefined &&
+                    {idCategoria_Produto != undefined &&
                         <h2> <span style={{ color: 'darkgray' }}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
                     }
 
