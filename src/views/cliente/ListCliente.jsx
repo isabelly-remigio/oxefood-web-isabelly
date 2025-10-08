@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Icon, Table, Modal,Header } from 'semantic-ui-react';
+import { Button, Container, Divider, Icon, Table, Modal, Header } from 'semantic-ui-react';
 import MenuSistema from '../../views/MenuSistema/MenuSistema';
 
 export default function ListCliente() {
@@ -9,8 +9,12 @@ export default function ListCliente() {
     const [lista, setLista] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [idRemover, setIdRemover] = useState();
-
-
+    const [enderecosCliente, setEnderecosCliente] = useState([]);
+    const [openEnderecoModal, setOpenEnderecoModal] = useState(false);
+    const [clienteIdAtual, setClienteIdAtual] = useState(null);
+    const [idEnderecoRemover, setIdEnderecoRemover] = useState(null);
+    const [openExclusaoEnderecoModal, setOpenExclusaoEnderecoModal] = useState(false);
+    
     useEffect(() => {
         carregarLista();
     }, [])
@@ -39,22 +43,51 @@ export default function ListCliente() {
 
     async function remover() {
 
-       await axios.delete('http://localhost:8080/api/cliente/' + idRemover)
-       .then((response) => {
- 
-           console.log('Cliente removido com sucesso.')
- 
-           axios.get("http://localhost:8080/api/cliente")
-           .then((response) => {
-               setLista(response.data)
-           })
-       })
-       .catch((error) => {
-           console.log('Erro ao remover um cliente.')
-       })
-       setOpenModal(false)
-   }
+        await axios.delete('http://localhost:8080/api/cliente/' + idRemover)
+            .then((response) => {
 
+                console.log('Cliente removido com sucesso.')
+
+                axios.get("http://localhost:8080/api/cliente")
+                    .then((response) => {
+                        setLista(response.data)
+                    })
+            })
+            .catch((error) => {
+                console.log('Erro ao remover um cliente.')
+            })
+        setOpenModal(false)
+    }
+
+const visualizarEnderecos = async (clienteId) => {
+    setClienteIdAtual(clienteId); 
+    setOpenEnderecoModal(true);   
+    try {
+        const { data } = await axios.get(`http://localhost:8080/api/cliente/endereco/${clienteId}`);
+        setEnderecosCliente(data);
+    } catch (err) {
+        console.error('Não foi possível carregar os endereços:', err);
+        setEnderecosCliente([]); 
+    }
+};
+
+const confirmarExclusaoEndereco = (idEndereco) => {
+    setIdEnderecoRemover(idEndereco);
+    setOpenExclusaoEnderecoModal(true);
+};
+
+const removerEndereco = async () => {
+    if (!idEnderecoRemover) return; 
+    try {
+        await axios.delete(`http://localhost:8080/api/cliente/endereco/${idEnderecoRemover}`);
+        const { data } = await axios.get(`http://localhost:8080/api/cliente/endereco/${clienteIdAtual}`);
+        setEnderecosCliente(data);
+    } catch (err) {
+        console.error('Erro ao tentar remover o endereço:', err);
+    } finally {
+        setOpenExclusaoEnderecoModal(false); 
+    }
+};
 
     return (
         <div>
@@ -122,7 +155,29 @@ export default function ListCliente() {
                                                 onClick={e => confirmaRemover(cliente.id)}>
                                                 <Icon name='trash' />
                                             </Button>
-
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='blue'
+                                                title='Cadastrar novo endereço'
+                                                icon
+                                                as={Link}
+                                                to="/form-endereco"
+                                                state={{ clienteId: cliente.id }}
+                                            >
+                                                <Icon name='plus' />
+                                            </Button>
+                                            &nbsp;
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='teal'
+                                                title='Visualizar endereços'
+                                                icon
+                                                onClick={() => visualizarEnderecos(cliente.id)}
+                                            >
+                                                <Icon name='eye' />
+                                            </Button>
                                         </Table.Cell>
                                     </Table.Row>
                                 ))}
@@ -147,6 +202,103 @@ export default function ListCliente() {
                         <Icon name='remove' /> Não
                     </Button>
                     <Button color='green' inverted onClick={() => remover()}>
+                        <Icon name='checkmark' /> Sim
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+
+            <Modal
+                onClose={() => setOpenEnderecoModal(false)}
+                open={openEnderecoModal}
+                size='small'
+                closeIcon
+            >
+                <Modal.Header>Endereços do Cliente</Modal.Header>
+                <Modal.Content scrolling>
+                    {enderecosCliente.length > 0 ? (
+                        <Table celled>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Rua</Table.HeaderCell>
+                                    <Table.HeaderCell>Número</Table.HeaderCell>
+                                    <Table.HeaderCell>Bairro</Table.HeaderCell>
+                                    <Table.HeaderCell>CEP</Table.HeaderCell>
+                                    <Table.HeaderCell>Cidade</Table.HeaderCell>
+                                    <Table.HeaderCell>Estado</Table.HeaderCell>
+                                    <Table.HeaderCell>Complemento</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+
+                            <Table.Body>
+                                {enderecosCliente.map(endereco => (
+                                    <Table.Row key={endereco.id}>
+                                        <Table.Cell>{endereco.rua}</Table.Cell>
+                                        <Table.Cell>{endereco.numero}</Table.Cell>
+                                        <Table.Cell>{endereco.bairro}</Table.Cell>
+                                        <Table.Cell>{endereco.cep}</Table.Cell>
+                                        <Table.Cell>{endereco.cidade}</Table.Cell>
+                                        <Table.Cell>{endereco.estado}</Table.Cell>
+                                        <Table.Cell>{endereco.complemento}</Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            <Button
+                                                as={Link}
+                                                to="/form-endereco"
+                                                state={{
+                                                    clienteId: clienteIdAtual,
+                                                    enderecoId: endereco.id,
+                                                    enderecoParaEditar: endereco
+                                                }}
+                                                inverted
+                                                circular
+                                                color='green'
+                                                title='Editar endereço'
+                                                icon
+                                            >
+                                                <Icon name='edit' />
+                                            </Button>
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='red'
+                                                title='Remover endereço'
+                                                icon
+                                                onClick={() => confirmarExclusaoEndereco(endereco.id)}
+                                                style={{ marginLeft: '5px' }}
+                                            >
+                                                <Icon name='trash' />
+                                            </Button>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
+                    ) : (
+                        <p style={{ textAlign: 'center', color: 'grey' }}>Nenhum endereço cadastrado para este cliente.</p>
+                    )}
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button color='black' onClick={() => setOpenEnderecoModal(false)}>
+                        Fechar
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+
+
+            <Modal
+                basic
+                onClose={() => setOpenExclusaoEnderecoModal(false)}
+                open={openExclusaoEnderecoModal}
+            >
+                <Header icon>
+                    <Icon name='trash' />
+                    <div style={{ marginTop: '5%' }}>Tem certeza que deseja remover este endereço?</div>
+                </Header>
+                <Modal.Actions>
+                    <Button basic color='red' inverted onClick={() => setOpenExclusaoEnderecoModal(false)}>
+                        <Icon name='remove' /> Não
+                    </Button>
+                    <Button color='green' inverted onClick={removerEndereco}>
                         <Icon name='checkmark' /> Sim
                     </Button>
                 </Modal.Actions>
