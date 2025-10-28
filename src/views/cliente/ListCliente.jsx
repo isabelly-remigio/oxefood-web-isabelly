@@ -231,23 +231,23 @@ const removerEndereco = async () => {
                             </Table.Header>
 
                             <Table.Body>
-                                {enderecosCliente.map(endereco => (
-                                    <Table.Row key={endereco.id}>
-                                        <Table.Cell>{endereco.rua}</Table.Cell>
-                                        <Table.Cell>{endereco.numero}</Table.Cell>
-                                        <Table.Cell>{endereco.bairro}</Table.Cell>
-                                        <Table.Cell>{endereco.cep}</Table.Cell>
-                                        <Table.Cell>{endereco.cidade}</Table.Cell>
-                                        <Table.Cell>{endereco.estado}</Table.Cell>
-                                        <Table.Cell>{endereco.complemento}</Table.Cell>
+                                {enderecosCliente.map(enderecoCliente => (
+                                    <Table.Row key={enderecoCliente.id}>
+                                        <Table.Cell>{enderecoCliente.rua}</Table.Cell>
+                                        <Table.Cell>{enderecoCliente.numero}</Table.Cell>
+                                        <Table.Cell>{enderecoCliente.bairro}</Table.Cell>
+                                        <Table.Cell>{enderecoCliente.cep}</Table.Cell>
+                                        <Table.Cell>{enderecoCliente.cidade}</Table.Cell>
+                                        <Table.Cell>{enderecoCliente.estado}</Table.Cell>
+                                        <Table.Cell>{enderecoCliente.complemento}</Table.Cell>
                                         <Table.Cell textAlign='center'>
                                             <Button
                                                 as={Link}
                                                 to="/form-endereco"
                                                 state={{
                                                     clienteId: clienteIdAtual,
-                                                    enderecoId: endereco.id,
-                                                    enderecoParaEditar: endereco
+                                                   enderecoClienteId: enderecoCliente.id,
+                                                    enderecoClienteParaEditar: enderecoCliente
                                                 }}
                                                 inverted
                                                 circular
@@ -263,7 +263,7 @@ const removerEndereco = async () => {
                                                 color='red'
                                                 title='Remover endereço'
                                                 icon
-                                                onClick={() => confirmarExclusaoEndereco(endereco.id)}
+                                                onClick={() => confirmarExclusaoEndereco(enderecoCliente.id)}
                                                 style={{ marginLeft: '5px' }}
                                             >
                                                 <Icon name='trash' />

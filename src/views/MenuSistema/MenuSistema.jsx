@@ -14,6 +14,13 @@ export default function MenuSistema (props) {
                    as={Link}
                    to='/'
                />
+
+                <Menu.Item
+                   content='Cidade'
+                   active={props.tela === 'cidade'}
+                   as={Link}
+                   to='/form-cidade'
+               />
                <Menu.Item
                    content='Cliente'
                    active={props.tela === 'cliente'}

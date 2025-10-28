@@ -31,7 +31,7 @@ const FormEndereco = () => {
         endereco
       );
       setMensagem({ sucesso: 'Endereço cadastrado com sucesso!', erro: '' });
-      setTimeout(() => navigate('/clientes'), 1500);
+      setTimeout(() => navigate('/list-cliente'), 1500);
     } catch (error) {
       console.error(error);
       setMensagem({ sucesso: '', erro: 'Erro ao cadastrar endereço.' });
