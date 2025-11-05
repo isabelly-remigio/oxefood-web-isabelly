@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from "./views/util/ProtectedRoute";
 import FormCategoriaProduto from './views/categoriaProduto/FormCategoriaProduto';
 import ListCategoriaProduto from './views/categoriaProduto/ListCategoriaProduto';
 import FormCliente from './views/cliente/FormCliente';
@@ -11,24 +12,84 @@ import ListProduto from './views/produto/ListProduto';
 import FormCidade from './views/cidade/FormCidade';
 import ListCidade from './views/cidade/ListCidade'
 import FormEndereco from "./views/cliente/FormEndereco";
+import FormLogin from './views/login/FormLogin';
+
 function Rotas() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="list-cliente" element={<ListCliente />} />
+                <Route path="/" element={<FormLogin />} />
 
-                <Route path="form-cliente" element={<FormCliente />} />
-                <Route path="form-produto" element={<FormProduto />} />
-                <Route path="list-produto" element={<ListProduto />} />
-             <Route path="list-categoriaProduto" element={<ListCategoriaProduto />} />
-                <Route path = "form-categoriaProduto" element={<FormCategoriaProduto/>} />
+                <Route path="/home" element={
 
-                <Route path="form-entregador" element={<FormEntregador />} />
-                <Route path="list-entregador" element={<ListEntregador />} />
-                <Route path="form-cidade" element= {<FormCidade/>}/>
-                 <Route path="/list-cidade" element= {<ListCidade/>}/>
-                 <Route path = "form-endereco" element ={<FormEndereco/>}/>
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                } />
+
+
+                <Route path="list-cliente" element={
+
+                    <ProtectedRoute>
+                        <ListCliente />
+                    </ProtectedRoute>
+                } />
+
+                <Route path="form-cliente" element={
+                    <ProtectedRoute>
+                        <FormCliente />
+                    </ProtectedRoute>
+
+                } />
+                <Route path="form-produto" element={
+                    <ProtectedRoute>
+                        <FormProduto />
+                    </ProtectedRoute>
+
+                } />
+                <Route path="list-produto" element={
+                    <ProtectedRoute>
+                        <ListProduto />
+                    </ProtectedRoute>
+                } />
+                <Route path="list-categoriaProduto" element={
+                    <ProtectedRoute>
+                        <ListCategoriaProduto />
+                    </ProtectedRoute>
+                } />
+                <Route path="form-categoriaProduto" element={
+                    <ProtectedRoute>
+                        <FormCategoriaProduto />
+                    </ProtectedRoute>
+
+                } />
+
+                <Route path="form-entregador" element={
+                    <ProtectedRoute>
+                        <FormEntregador />
+                    </ProtectedRoute>
+                } />
+                <Route path="list-entregador" element={
+                    <ProtectedRoute>
+                        <ListEntregador />
+                    </ProtectedRoute>
+                } />
+                <Route path="form-cidade" element={
+                    <ProtectedRoute>
+                        <FormCidade />
+                    </ProtectedRoute>
+                } />
+                <Route path="/list-cidade" element={
+                    <ProtectedRoute>
+                        <ListCidade />
+                    </ProtectedRoute>
+                } />
+                <Route path="form-endereco" element={
+                    <ProtectedRoute>
+                        <FormEndereco />
+                    </ProtectedRoute>
+
+                } />
             </Routes>
         </>
     )

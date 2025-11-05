@@ -56,20 +56,23 @@ export default function FormCliente() {
             axios.put("http://localhost:8080/api/cliente/" + idCliente, clienteRequest)
                 .then((response) => {
                     notifySuccess('Cliente alterado com sucesso.')
- })
-              if (error.response.data.errors != undefined) {
-       		for (let i = 0; i < error.response.data.errors.length; i++) {
-	       		notifyError(error.response.data.errors[i].defaultMessage)
-	    	}
-	} else {
-		notifyError(error.response.data.message)
-	}
+                })
+                .catch((error) => {
+                    if (error.response.data.errors != undefined) {
+                        for (let i = 0; i < error.response.data.errors.length; i++) {
+                            notifyError(error.response.data.errors[i].defaultMessage)
+                        }
+                    } else {
+                        notifyError(error.response.data.message)
+                    }
+                })
+
 
         } else { //Cadastro:
             axios.post("http://localhost:8080/api/cliente", clienteRequest)
-                .then((response) => { 
-                notifySuccess('Cliente cadastrado com sucesso.')
- })
+                .then((response) => {
+                    notifySuccess('Cliente cadastrado com sucesso.')
+                })
                 .catch((error) => { console.log('Erro ao incluir o cliente.') })
         }
     }
