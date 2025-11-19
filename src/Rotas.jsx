@@ -21,8 +21,8 @@ function Rotas() {
                 <Route path="/" element={<FormLogin />} />
 
                 <Route path="/home" element={
-
-                    <ProtectedRoute>
+// ProtectedRoute, ele foi usado encapsulando o nome da pagina com ProtectedRoute deixando a rota protegida
+                    <ProtectedRoute>  
                         <Home />
                     </ProtectedRoute>
                 } />
